@@ -1,23 +1,31 @@
 ## Setup working variables.
-$FwProfileName = "Domain"
-$FwLog = Get-NetFirewallProfile -Name $FwProfileName | Select-Object LogFileName
+$FwProfileName = "Private"
+$FwLog = Get-NetFirewallProfile -Name $FwProfileName `
+    | Select-Object LogFileName
+$FwLog = "C:\Users\JohnMartin\source\repos\GitHub\BlogPosts\WindowsFirewall\Part 3\DB01_Domain_FirewallLog.txt"
 $WorkingFile = "$env:TEMP\FWLog_Temp.csv"
 
-## Get the column headers from the Firewall Log File and turn it into a String Array to use as a header later.
-[string]$FieldList = Select-String -Path $FwLog.LogFileName -Pattern "Fields"
-$HeaderFields = $FieldList.Substring($FieldList.IndexOf(": ")+2).Replace(" ",',')
-$CsvHeader = $HeaderFields -split ","
+Get-Content -Path $FwLog `
+    | Select-Object -First 25
 
-## Pull data from Firewall Log file (Need to run as admin), skip the first 5 rows of junk and then create our working CSV data.
-$CsvBody = Get-Content -Path $FwLog.LogFileName | Select-Object -Skip 5
+## Get the column headers from the Firewall Log File and turn it into a String Array to use as a header later.
+[string]$FieldList = Select-String -Path $FwLog -Pattern "Fields"
+$CsvHeader = $FieldList.Substring($FieldList.IndexOf(": ")+2) -split " "
+
+## Pull data from Firewall Log file (Need to run as admin),
+## skip the first 5 rows of junk and then create our working CSV data.
+$CsvBody = Get-Content -Path $FwLog `
+    | Select-Object -Skip 5
 $CsvBody | Out-File -FilePath $WorkingFile -Force
 $CsvFinal = Import-Csv -Path $WorkingFile -Delimiter " " -Header $CsvHeader
 
 ## Clean up after ourselves.
 Remove-Item -Path $WorkingFile -Force
 
-## Let's see what is talking to our server.
+$CsvFinal | Select-Object -Skip 100 -First 25 | Format-Table -Property *
+
 ## https://en.wikipedia.org/wiki/List_of_TCP_and_UDP_port_numbers
+## Let's see what is talking to our server.
 $CsvFinal | Where-Object {
     $_.Path -eq "RECEIVE"
 } `
@@ -34,8 +42,8 @@ $CsvFinal | Where-Object {
     | Sort-Object -Property Count -Descending `
     | Select-Object -Property Name, Count
 
-## Now we set the Firewall Rules which we want on the Server.
 ## https://docs.microsoft.com/en-us/windows/security/threat-protection/windows-firewall/create-an-inbound-program-or-service-rule
+## Now we set the Firewall Rules which we want on the Server.
 ## TDS Traffic to SQL Server.
 $FirewallRuleParams = @{
     Name = "Allow_TCP_1433_In"
