@@ -1,0 +1,55 @@
+digraph {
+        compound = "true"
+        newrank = "true"
+        subgraph "root" {
+                "[root] azurerm_resource_group.rgsqldb (expand)" [label = "azurerm_resource_group.rgsqldb", shape = "box"]
+                "[root] azurerm_sql_database.appdb01 (expand)" [label = "azurerm_sql_database.appdb01", shape = "box"]
+                "[root] azurerm_sql_firewall_rule.allowAzureServices (expand)" [label = "azurerm_sql_firewall_rule.allowAzureServices", shape = "box"]
+                "[root] azurerm_sql_server.sql01 (expand)" [label = "azurerm_sql_server.sql01", shape = "box"]
+                "[root] provider[\"registry.terraform.io/hashicorp/azurerm\"]" [label = "provider[\"registry.terraform.io/hashicorp/azurerm\"]", shape = "diamond"]
+                "[root] var.AzSqlDbCollation" [label = "var.AzSqlDbCollation", shape = "note"]
+                "[root] var.AzSqlDbMaxSizeGb" [label = "var.AzSqlDbMaxSizeGb", shape = "note"]
+                "[root] var.AzSqlDbName" [label = "var.AzSqlDbName", shape = "note"]
+                "[root] var.AzSqlDbSkuName" [label = "var.AzSqlDbSkuName", shape = "note"]
+                "[root] var.AzSqlServerAdminAccountName" [label = "var.AzSqlServerAdminAccountName", shape = "note"]
+                "[root] var.AzSqlServerAdminAccountPassword" [label = "var.AzSqlServerAdminAccountPassword", shape = "note"]
+                "[root] var.AzSqlServerName" [label = "var.AzSqlServerName", shape = "note"]
+                "[root] var.BacpacStorageKey" [label = "var.BacpacStorageKey", shape = "note"]
+                "[root] var.BacpacStorageUri" [label = "var.BacpacStorageUri", shape = "note"]
+                "[root] var.BacpackStorageKeyType" [label = "var.BacpackStorageKeyType", shape = "note"]
+                "[root] var.Contact" [label = "var.Contact", shape = "note"]
+                "[root] var.CostCentre" [label = "var.CostCentre", shape = "note"]
+                "[root] var.Environment" [label = "var.Environment", shape = "note"]
+                "[root] var.ResourceGroupLocation" [label = "var.ResourceGroupLocation", shape = "note"]
+                "[root] var.ResourceGroupName" [label = "var.ResourceGroupName", shape = "note"]
+                "[root] var.ServerAuthAccessType" [label = "var.ServerAuthAccessType", shape = "note"]
+                "[root] var.Usage" [label = "var.Usage", shape = "note"]
+                "[root] azurerm_resource_group.rgsqldb (expand)" -> "[root] local.tags (expand)"
+                "[root] azurerm_resource_group.rgsqldb (expand)" -> "[root] provider[\"registry.terraform.io/hashicorp/azurerm\"]"
+                "[root] azurerm_resource_group.rgsqldb (expand)" -> "[root] var.ResourceGroupLocation"
+                "[root] azurerm_resource_group.rgsqldb (expand)" -> "[root] var.ResourceGroupName"
+                "[root] azurerm_sql_database.appdb01 (expand)" -> "[root] azurerm_sql_firewall_rule.allowAzureServices (expand)"
+                "[root] azurerm_sql_database.appdb01 (expand)" -> "[root] var.AzSqlDbCollation"
+                "[root] azurerm_sql_database.appdb01 (expand)" -> "[root] var.AzSqlDbMaxSizeGb"
+                "[root] azurerm_sql_database.appdb01 (expand)" -> "[root] var.AzSqlDbName"
+                "[root] azurerm_sql_database.appdb01 (expand)" -> "[root] var.AzSqlDbSkuName"
+                "[root] azurerm_sql_database.appdb01 (expand)" -> "[root] var.BacpacStorageKey"
+                "[root] azurerm_sql_database.appdb01 (expand)" -> "[root] var.BacpacStorageUri"
+                "[root] azurerm_sql_database.appdb01 (expand)" -> "[root] var.BacpackStorageKeyType"
+                "[root] azurerm_sql_database.appdb01 (expand)" -> "[root] var.ServerAuthAccessType"
+                "[root] azurerm_sql_firewall_rule.allowAzureServices (expand)" -> "[root] azurerm_sql_server.sql01 (expand)"
+                "[root] azurerm_sql_server.sql01 (expand)" -> "[root] azurerm_resource_group.rgsqldb (expand)"
+                "[root] azurerm_sql_server.sql01 (expand)" -> "[root] var.AzSqlServerAdminAccountName"
+                "[root] azurerm_sql_server.sql01 (expand)" -> "[root] var.AzSqlServerAdminAccountPassword"
+                "[root] azurerm_sql_server.sql01 (expand)" -> "[root] var.AzSqlServerName"
+                "[root] local.default_tags (expand)" -> "[root] var.Environment"
+                "[root] local.default_tags (expand)" -> "[root] var.Usage"
+                "[root] local.tags (expand)" -> "[root] local.default_tags (expand)"
+                "[root] meta.count-boundary (EachMode fixup)" -> "[root] azurerm_sql_database.appdb01 (expand)"
+                "[root] meta.count-boundary (EachMode fixup)" -> "[root] var.Contact"
+                "[root] meta.count-boundary (EachMode fixup)" -> "[root] var.CostCentre"
+                "[root] provider[\"registry.terraform.io/hashicorp/azurerm\"] (close)" -> "[root] azurerm_sql_database.appdb01 (expand)"
+                "[root] root" -> "[root] meta.count-boundary (EachMode fixup)"
+                "[root] root" -> "[root] provider[\"registry.terraform.io/hashicorp/azurerm\"] (close)"
+        }
+}
